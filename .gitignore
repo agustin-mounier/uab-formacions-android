@@ -4,3 +4,15 @@
 build/
 local.properties
 *.iml
+.gradle/
+/local.properties
+!/.idea
+/.idea/*
+!/.idea/icon.png
+!/.idea/icon_dark.png
+/captures/
+/dist/
+.DS_Store
+build/
+Thumbs.db
+.kotlin/

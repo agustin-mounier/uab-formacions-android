@@ -1,7 +1,7 @@
-package com.glovoapp.uabformacions.dogapi
+package com.glovoapp.uabformacions.tmdb
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class DogsApplication : Application()
+class MovieApplication : Application()

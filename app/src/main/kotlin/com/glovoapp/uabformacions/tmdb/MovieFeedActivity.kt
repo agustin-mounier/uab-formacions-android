@@ -1,25 +1,23 @@
-package com.glovoapp.uabformacions.dogapi
+package com.glovoapp.uabformacions.tmdb
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
+import com.glovoapp.uabformacions.tmdb.MovieFeedScreen
+import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BreedsActivity : ComponentActivity() {
+class MovieFeedActivity : ComponentActivity() {
 
-    private val viewModel: BreedsViewModel by viewModels()
+    private val viewModel: MovieFeedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            BreedsScreen(
-                breeds = viewModel.breeds.collectAsState().value,
-            )
+            MovieFeedScreen(viewModel)
         }
     }
-
 }

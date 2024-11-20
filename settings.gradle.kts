@@ -25,3 +25,5 @@ include(
     "app",
     "data",
 )
+include(":domain")
+include(":domain")

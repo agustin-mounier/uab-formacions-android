@@ -11,7 +11,7 @@ java.toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get
 kapt.correctErrorTypes = true
 
 android {
-    namespace = "com.glovoapp.uabformacions.dogapi"
+    namespace = "com.glovoapp.uabformacions.tmdb"
 
     compileSdk = libs.versions.android.compileSDK.get().toInt()
     defaultConfig.minSdk = libs.versions.android.minSDK.get().toInt()
@@ -28,6 +28,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.uiToolingPreview)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
     debugImplementation(libs.androidx.compose.uiTooling)
     testImplementation(libs.androidx.compose.junit4)
 
