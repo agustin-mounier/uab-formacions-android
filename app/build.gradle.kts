@@ -32,5 +32,7 @@ dependencies {
     implementation(libs.coil.network)
     debugImplementation(libs.androidx.compose.uiTooling)
     testImplementation(libs.androidx.compose.junit4)
+    testImplementation(libs.hilt.android.testing)
+    testImplementation(libs.testing.mockk)
 
 }
