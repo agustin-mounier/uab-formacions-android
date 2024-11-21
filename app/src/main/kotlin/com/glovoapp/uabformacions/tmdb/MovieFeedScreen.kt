@@ -1,6 +1,7 @@
 package com.glovoapp.uabformacions.tmdb
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
@@ -50,7 +53,7 @@ fun ScreenContent(movieList: List<Movie>, onSortingOptionSelected: (String) -> U
     MaterialTheme {
         Column {
             TopAppBar(title = { Text(text = "Movie feed") })
-            SortingOptions(onSortingOptionSelected)
+            SortOptionsRow(onSortingOptionSelected)
             LazyColumn {
                 items(movieList.size) { i ->
                     MovieCard(movieList[i])
@@ -61,32 +64,37 @@ fun ScreenContent(movieList: List<Movie>, onSortingOptionSelected: (String) -> U
 }
 
 @Composable
-fun SortingOptions(
-    onSortingOptionSelected: (String) -> Unit
+fun SortOptionsRow(
+    onOptionSelected: (String) -> Unit
 ) {
-    val radioOptions = listOf("Popularity", "Release date", "Rating")
-    var selectedOption by remember { mutableStateOf(radioOptions[0]) }
+    val options = listOf("Popularity", "Release Date", "Rating")
+    var selectedOption by remember { mutableStateOf(options[0]) }
 
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .background(Color.LightGray)
-    ) {
-        Text(modifier = Modifier.padding(start = 16.dp, top = 8.dp), text = "Sort by:")
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            radioOptions.forEach { option ->
-                Row(
-                    modifier = Modifier.clickable {
+    Column(modifier = Modifier.background(Color.White)) {
+        Text(
+            text = "Sort by:",
+            style = MaterialTheme.typography.h6,
+            modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            options.forEach { option ->
+                Button(
+                    onClick = {
                         selectedOption = option
-                        onSortingOptionSelected(option)
+                        onOptionSelected(option)
                     },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = (option == selectedOption),
-                        onClick = { selectedOption = option },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = if (selectedOption == option) MaterialTheme.colors.primary else MaterialTheme.colors.surface
                     )
-                    Text(text = option)
+                ) {
+                    Text(
+                        text = option,
+                        color = if (selectedOption == option) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
+                    )
                 }
             }
         }
@@ -135,19 +143,29 @@ fun MovieCard(movie: Movie) {
                 text = movie.overview,
                 fontSize = 14.sp,
                 color = Color.Gray,
-                maxLines = 2,
+                maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
 
-            Text("Release date: ${movie.releaseDate}")
+            Spacer(modifier = Modifier.height(8.dp))
+
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
-                horizontalArrangement = Arrangement.SpaceAround
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Rating: ${movie.voteAverage}")
-                Text("Popularity: ${movie.popularity}")
+                Text(
+                    text = "Release: ${movie.releaseDate}",
+                    style = MaterialTheme.typography.caption
+                )
+                Text(
+                    text = "Rating: ${movie.voteAverage}/10",
+                    style = MaterialTheme.typography.caption
+                )
+                Text(
+                    text = "Popularity: ${movie.popularity.toInt()}",
+                    style = MaterialTheme.typography.caption
+                )
             }
         }
     }

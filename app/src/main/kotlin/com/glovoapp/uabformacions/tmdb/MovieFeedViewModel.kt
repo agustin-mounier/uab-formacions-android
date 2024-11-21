@@ -27,7 +27,7 @@ class MovieFeedViewModel @Inject constructor(
                 movies.value = movies.value.sortedByDescending { it.popularity }
             }
 
-            "Release date" -> {
+            "Release Date" -> {
                 movies.value = movies.value.sortedByDescending { LocalDate.parse(it.releaseDate) }
             }
 
