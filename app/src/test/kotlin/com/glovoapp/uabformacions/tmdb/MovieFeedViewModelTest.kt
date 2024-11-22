@@ -1,6 +1,9 @@
 package com.glovoapp.uabformacions.tmdb
 
+import MoviesResponse
+import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel.SortingOption
 import com.glovoapp.uabformacions.tmdb.api.MovieApi
+import com.glovoapp.uabformacions.tmdb.dtos.Movie
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -24,7 +27,7 @@ class MovieFeedViewModelTest {
     fun setup() {
         val mockMovies = generateListOfMovies()
 
-        coEvery { movieApi.getPopularMovies() } returns MovieApi.MoviesResponse(
+        coEvery { movieApi.getPopularMovies() } returns MoviesResponse(
             page = 1, results = mockMovies, totalPages = 2, totalResults = 3
         )
 
@@ -47,7 +50,7 @@ class MovieFeedViewModelTest {
     fun `should sort movies by release date`() = runTest {
         advanceUntilIdle() // Ensure the coroutine completes
 
-        viewModel.onSortingOptionSelected("Release Date")
+        viewModel.onSortingOptionSelected(SortingOption.RELEASE_DATE)
         val movies = viewModel.movies.value
 
         assertEquals("2023-10-01", movies[0].releaseDate)
@@ -59,7 +62,7 @@ class MovieFeedViewModelTest {
     fun `should sort movies by rating`() = runTest {
         advanceUntilIdle() // Ensure the coroutine completes
 
-        viewModel.onSortingOptionSelected("Rating")
+        viewModel.onSortingOptionSelected(SortingOption.RATING)
         val movies = viewModel.movies.value
 
         assertEquals(8.6f, movies[0].voteAverage)
@@ -68,7 +71,7 @@ class MovieFeedViewModelTest {
     }
 
     private fun generateListOfMovies() = listOf(
-        MovieApi.Movie(
+        Movie(
             adult = false,
             backdropPath = "path1",
             genreIds = listOf(1, 2),
@@ -83,7 +86,7 @@ class MovieFeedViewModelTest {
             video = false,
             voteAverage = 7.5f,
             voteCount = 100
-        ), MovieApi.Movie(
+        ), Movie(
             adult = false,
             backdropPath = "path2",
             genreIds = listOf(3, 4),
@@ -98,7 +101,7 @@ class MovieFeedViewModelTest {
             video = false,
             voteAverage = 8.0f,
             voteCount = 200
-        ), MovieApi.Movie(
+        ), Movie(
             adult = false,
             backdropPath = "path3",
             genreIds = listOf(3, 4),

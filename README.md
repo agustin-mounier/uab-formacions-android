@@ -97,14 +97,59 @@ For a deeper understanding of Compose, refer to the [Jetpack Compose documentati
 
 ---
 
+## Bonus Exercises
+
+### 8. Unify the ViewModel's StateFlows
+- In the ViewModel we have two StateFlow variables, one for the `movies` and another for the `selectedSortingOption`.
+- Having multiple StateFlows for the same view is usually considered bad practice, unify them into one `movieFeedState` StateFlow.
+- Don't forget to update the `MovieViewModelTest`.
+
+### 9. Implement MovieDetailActivity 
+This exercise will guide you through creating a `MovieDetailActivity` in Jetpack Compose. The activity will display detailed movie information when a user taps on a `MovieCard` in the movie feed. The steps below outline the changes needed to implement this feature.
+
+#### **1 - Add a New Activity**
+
+- Create a new `Activity` named `MovieDetailActivity`.
+- Make sure the activity is registered in the `AndroidManifest.xml` file.
+- For more details on how to create a new activity, refer to the [Android documentation](https://developer.android.com/guide/components/activities/intro).
+
+#### **2 - Enable Navigation Between Screens**
+
+- Modify the `MovieCard` to detect user interaction when tapped.
+- Use the `Intent` API to navigate from the main screen to `MovieDetailActivity` and pass the selected movie data.
+- You can learn more about navigation using intents in the [Android documentation](https://developer.android.com/guide/components/intents-filters).
+
+#### **3 - Make Movie Data Parcelable**
+
+- Ensure the `Movie` data class implements `Parcelable` so it can be passed between components.
+- Use Kotlin's `@Parcelize` annotation to simplify this process.
+- For more information on working with `Parcelable`, refer to the [documentation](https://developer.android.com/kotlin/parcelize).
+
+#### **4 - Design the MovieDetailActivity UI**
+
+- Create a `MovieDetailScreen` composable that displays:
+   - The movie's title
+   - Release date
+   - Popularity score
+   - Rating score
+   - Overview
+   - Backdrop image
+- Learn more about building UIs with Jetpack Compose in the [official documentation](https://developer.android.com/jetpack/compose).
+
+#### **5 - Run the App**
+
+- Build and run the app on an emulator or physical device.
+- Tap on any movie card in the movie feed.
+- Verify that the `MovieDetailActivity` opens and displays the detailed information for the selected movie.
+
+---
+
 ## Additional Resources
 - [Jetpack Compose Basics](https://developer.android.com/jetpack/compose/documentation)
 - [Android ViewModel Documentation](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Unit Testing in Android](https://developer.android.com/training/testing/unit-testing)
 
 ---
-
-Add: unit tests, improve desing, movie details excercise, pagination.
 
 ## Learning Goals
 By following these steps, you’ll:

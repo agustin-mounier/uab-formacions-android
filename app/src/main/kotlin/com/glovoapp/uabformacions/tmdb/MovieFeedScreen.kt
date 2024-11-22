@@ -1,8 +1,6 @@
 package com.glovoapp.uabformacions.tmdb
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,18 +14,13 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -36,7 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.glovoapp.uabformacions.tmdb.api.MovieApi.Movie
+import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel.SortingOption
+import com.glovoapp.uabformacions.tmdb.dtos.Movie
 
 
 @Composable
@@ -44,16 +38,17 @@ fun MovieFeedScreen(
     viewModel: MovieFeedViewModel
 ) {
     val movieList by viewModel.movies.collectAsState()
+    val selectedSortingOption by viewModel.selectedSortingOption.collectAsState()
 
-    ScreenContent(movieList, viewModel::onSortingOptionSelected)
+    ScreenContent(movieList, selectedSortingOption, viewModel::onSortingOptionSelected)
 }
 
 @Composable
-fun ScreenContent(movieList: List<Movie>, onSortingOptionSelected: (String) -> Unit) {
+fun ScreenContent(movieList: List<Movie>, selectedSortingOption: SortingOption, onSortingOptionSelected: (SortingOption) -> Unit) {
     MaterialTheme {
         Column {
             TopAppBar(title = { Text(text = "Movie feed") })
-            SortOptionsRow(onSortingOptionSelected)
+            SortOptionsRow(selectedSortingOption, onSortingOptionSelected)
             LazyColumn {
                 items(movieList.size) { i ->
                     MovieCard(movieList[i])
@@ -65,35 +60,37 @@ fun ScreenContent(movieList: List<Movie>, onSortingOptionSelected: (String) -> U
 
 @Composable
 fun SortOptionsRow(
-    onOptionSelected: (String) -> Unit
+    selectedSortingOption: SortingOption,
+    onOptionSelected: (SortingOption) -> Unit
 ) {
-    val options = listOf("Popularity", "Release Date", "Rating")
-    var selectedOption by remember { mutableStateOf(options[0]) }
+    val sortingOptions = SortingOption.entries
 
     Column(modifier = Modifier.background(Color.White)) {
         Text(
             text = "Sort by:",
             style = MaterialTheme.typography.h6,
-            modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+            fontSize = 16.sp,
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
         )
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            options.forEach { option ->
+            sortingOptions.forEach { option ->
                 Button(
                     onClick = {
-                        selectedOption = option
                         onOptionSelected(option)
                     },
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = if (selectedOption == option) MaterialTheme.colors.primary else MaterialTheme.colors.surface
+                        backgroundColor = if (selectedSortingOption == option) MaterialTheme.colors.primary else MaterialTheme.colors.surface
                     )
                 ) {
                     Text(
-                        text = option,
-                        color = if (selectedOption == option) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
+                        text = option.displayName,
+                        color = if (selectedSortingOption == option) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
                     )
                 }
             }
@@ -110,9 +107,7 @@ fun MovieCard(movie: Movie) {
             .padding(16.dp),
         elevation = 8.dp
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Column {
             // Backdrop Image
             AsyncImage(
                 model = "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
@@ -121,13 +116,13 @@ fun MovieCard(movie: Movie) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(180.dp)
-                    .clip(RoundedCornerShape(16.dp))
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Movie Title
             Text(
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                 text = movie.title,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -140,6 +135,7 @@ fun MovieCard(movie: Movie) {
 
             // Movie Overview
             Text(
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                 text = movie.overview,
                 fontSize = 14.sp,
                 color = Color.Gray,
@@ -152,19 +148,24 @@ fun MovieCard(movie: Movie) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
             ) {
                 Text(
                     text = "Release: ${movie.releaseDate}",
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.caption,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "Rating: ${movie.voteAverage}/10",
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.caption,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "Popularity: ${movie.popularity.toInt()}",
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.caption,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
@@ -225,5 +226,5 @@ fun Preview() {
             voteCount = 2900
         )
     )
-    ScreenContent(movies, {})
+    ScreenContent(movies, SortingOption.POPULARITY, {})
 }
