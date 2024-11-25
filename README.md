@@ -2,6 +2,8 @@
 
 This application is designed as an educational exercise to learn Android development using Jetpack Compose and modern Android architecture. Follow the steps below to set up the project and complete the tasks to enhance your understanding of Compose, ViewModel logic, and unit testing.
 
+The movie data is provided by the TMDB api: https://developer.themoviedb.org/reference/intro/getting-started
+
 ---
 
 ## Steps to Get Started
@@ -30,6 +32,7 @@ This application is designed as an educational exercise to learn Android develop
 - Open the `MovieFeedScreen.kt` file. To do a global search tap 3 times the shift key.
 - Locate the `MovieCard` composable function.
 - Modify it to match the implementation provided in the image. This will improve the MovieCard UI, showing more details like the release date, rating and popularity.
+- ![img.png](img.png)
 
 #### Additional Info: Jetpack Compose Basics
 To help you understand and modify the `MovieCard` function, here are a few key Jetpack Compose concepts:
