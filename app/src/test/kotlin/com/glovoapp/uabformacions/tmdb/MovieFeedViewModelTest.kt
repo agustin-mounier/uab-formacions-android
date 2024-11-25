@@ -1,9 +1,9 @@
 package com.glovoapp.uabformacions.tmdb
 
-import MoviesResponse
-import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel.SortingOption
-import com.glovoapp.uabformacions.tmdb.api.MovieApi
-import com.glovoapp.uabformacions.tmdb.dtos.Movie
+import com.glovoapp.uabformacions.tmdb.data.dtos.Movie
+import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel
+import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption
+import com.glovoapp.uabformacions.tmdb.domain.repositories.MovieRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -18,7 +18,7 @@ import org.junit.Test
 class MovieFeedViewModelTest {
 
     private lateinit var viewModel: MovieFeedViewModel
-    private val movieApi: MovieApi = mockk()
+    private val movieRepository: MovieRepository = mockk()
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -27,11 +27,9 @@ class MovieFeedViewModelTest {
     fun setup() {
         val mockMovies = generateListOfMovies()
 
-        coEvery { movieApi.getPopularMovies() } returns MoviesResponse(
-            page = 1, results = mockMovies, totalPages = 2, totalResults = 3
-        )
+        coEvery { movieRepository.getPopularMovies() } returns mockMovies
 
-        viewModel = MovieFeedViewModel(movieApi)
+        viewModel = MovieFeedViewModel(movieRepository)
         viewModel.init()
     }
 

@@ -22,8 +22,5 @@ plugins {
 rootProject.name = "uab-formacions-android"
 
 include(
-    "app",
-    "data",
+    "app"
 )
-include(":domain")
-include(":domain")

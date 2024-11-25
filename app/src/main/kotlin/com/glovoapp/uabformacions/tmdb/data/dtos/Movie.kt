@@ -1,4 +1,4 @@
-package com.glovoapp.uabformacions.tmdb.dtos
+package com.glovoapp.uabformacions.tmdb.data.dtos
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

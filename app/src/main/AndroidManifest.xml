@@ -9,7 +9,7 @@
         android:theme="@android:style/Theme.Material.NoActionBar">
 
         <activity
-            android:name=".MovieFeedActivity"
+            android:name=".ui.MovieFeedActivity"
             android:exported="true">
 
             <intent-filter>

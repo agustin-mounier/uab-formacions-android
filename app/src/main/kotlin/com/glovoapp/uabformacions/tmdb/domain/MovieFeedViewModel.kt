@@ -1,13 +1,12 @@
-package com.glovoapp.uabformacions.tmdb
+package com.glovoapp.uabformacions.tmdb.domain
 
-import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel.SortingOption.POPULARITY
-import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel.SortingOption.RATING
-import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel.SortingOption.RELEASE_DATE
-import com.glovoapp.uabformacions.tmdb.api.MovieApi
-import com.glovoapp.uabformacions.tmdb.dtos.Movie
+import com.glovoapp.uabformacions.tmdb.data.dtos.Movie
+import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption.POPULARITY
+import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption.RATING
+import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption.RELEASE_DATE
+import com.glovoapp.uabformacions.tmdb.domain.repositories.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieFeedViewModel @Inject constructor(
-    private val movieApi: MovieApi,
+    private val moviesRepository: MovieRepository
 ) : ViewModel() {
 
     private val _movies = MutableStateFlow<List<Movie>>(emptyList())
@@ -28,7 +27,7 @@ class MovieFeedViewModel @Inject constructor(
 
     @Inject
     fun init() = viewModelScope.launch {
-        _movies.value = movieApi.getPopularMovies().results.sortBy(POPULARITY)
+        _movies.value = moviesRepository.getPopularMovies().sortBy(POPULARITY)
     }
 
     fun onSortingOptionSelected(sortingOption: SortingOption) {
@@ -41,7 +40,6 @@ class MovieFeedViewModel @Inject constructor(
         RELEASE_DATE -> this.sortedByDescending { LocalDate.parse(it.releaseDate) }
         RATING -> this.sortedByDescending { it.voteAverage }
     }
-
 
     enum class SortingOption(val displayName: String) {
         POPULARITY(displayName = "Popularity"),

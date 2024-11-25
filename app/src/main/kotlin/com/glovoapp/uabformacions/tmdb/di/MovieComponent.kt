@@ -1,5 +1,6 @@
-package com.glovoapp.uabformacions.tmdb.api
+package com.glovoapp.uabformacions.tmdb.di
 
+import com.glovoapp.uabformacions.tmdb.data.api.MovieApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MovieAPIComponent {
+object MovieComponent {
 
     @Provides
     @Singleton

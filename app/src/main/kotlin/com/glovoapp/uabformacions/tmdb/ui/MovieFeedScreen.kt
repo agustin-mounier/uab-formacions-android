@@ -1,4 +1,4 @@
-package com.glovoapp.uabformacions.tmdb
+package com.glovoapp.uabformacions.tmdb.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,8 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.glovoapp.uabformacions.tmdb.MovieFeedViewModel.SortingOption
-import com.glovoapp.uabformacions.tmdb.dtos.Movie
+import com.glovoapp.uabformacions.tmdb.data.dtos.Movie
+import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel
+import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption
 
 
 @Composable
