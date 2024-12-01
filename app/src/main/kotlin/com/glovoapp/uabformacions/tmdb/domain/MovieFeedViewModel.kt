@@ -4,14 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.glovoapp.uabformacions.tmdb.data.dtos.Movie
 import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption.POPULARITY
-import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption.RATING
-import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption.RELEASE_DATE
 import com.glovoapp.uabformacions.tmdb.domain.repositories.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,18 +24,11 @@ class MovieFeedViewModel @Inject constructor(
 
     @Inject
     fun init() = viewModelScope.launch {
-        _movies.value = moviesRepository.getPopularMovies().sortBy(POPULARITY)
+        _movies.value = moviesRepository.getPopularMovies()
     }
 
     fun onSortingOptionSelected(sortingOption: SortingOption) {
         _selectedSortingOption.value = sortingOption
-        _movies.value = _movies.value.sortBy(sortingOption)
-    }
-
-    private fun List<Movie>.sortBy(sortingOption: SortingOption) = when (sortingOption) {
-        POPULARITY -> this.sortedByDescending { it.popularity }
-        RELEASE_DATE -> this.sortedByDescending { LocalDate.parse(it.releaseDate) }
-        RATING -> this.sortedByDescending { it.voteAverage }
     }
 
     enum class SortingOption(val displayName: String) {

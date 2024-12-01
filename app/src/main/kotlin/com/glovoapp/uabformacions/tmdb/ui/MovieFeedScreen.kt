@@ -145,30 +145,6 @@ fun MovieCard(movie: Movie) {
             )
 
             Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
-            ) {
-                Text(
-                    text = "Release: ${movie.releaseDate}",
-                    style = MaterialTheme.typography.caption,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "Rating: ${movie.voteAverage}/10",
-                    style = MaterialTheme.typography.caption,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "Popularity: ${movie.popularity.toInt()}",
-                    style = MaterialTheme.typography.caption,
-                    fontWeight = FontWeight.Bold
-                )
-            }
         }
     }
 }
