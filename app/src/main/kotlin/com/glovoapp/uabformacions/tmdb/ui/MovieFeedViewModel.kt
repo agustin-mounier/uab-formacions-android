@@ -1,9 +1,9 @@
-package com.glovoapp.uabformacions.tmdb.domain
+package com.glovoapp.uabformacions.tmdb.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.glovoapp.uabformacions.tmdb.data.dtos.Movie
-import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption.POPULARITY
+import com.glovoapp.uabformacions.tmdb.ui.MovieFeedViewModel.SortingOption.POPULARITY
 import com.glovoapp.uabformacions.tmdb.domain.repositories.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

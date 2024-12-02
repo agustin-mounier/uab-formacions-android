@@ -1,8 +1,8 @@
 package com.glovoapp.uabformacions.tmdb
 
 import com.glovoapp.uabformacions.tmdb.data.dtos.Movie
-import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel
-import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption
+import com.glovoapp.uabformacions.tmdb.ui.MovieFeedViewModel
+import com.glovoapp.uabformacions.tmdb.ui.MovieFeedViewModel.SortingOption
 import com.glovoapp.uabformacions.tmdb.domain.repositories.MovieRepository
 import io.mockk.coEvery
 import io.mockk.mockk

@@ -30,8 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.glovoapp.uabformacions.tmdb.data.dtos.Movie
-import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel
-import com.glovoapp.uabformacions.tmdb.domain.MovieFeedViewModel.SortingOption
+import com.glovoapp.uabformacions.tmdb.ui.MovieFeedViewModel.SortingOption
 
 
 @Composable
